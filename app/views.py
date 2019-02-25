@@ -93,8 +93,9 @@ def get_uploaded_images():
         for file in files:
             # foldr = os.path.join(subdir, file)[13:]
             # pics.append(foldr)
-            folder = os.path.splitext(os.path.basename(subdir))[0]
-            pics.append(os.path.join(folder, file))
+            # folder = os.path.splitext(os.path.basename(subdir))[0]
+            # pics.append(os.path.join(folder, file))
+            pics.append(file)
     return pics
 
 # Flash errors from the form if validation fails

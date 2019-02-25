@@ -5,15 +5,15 @@
     {% for file in files %}
         <li class="photo-item">
           <p class="name">{{ file }}</p>
-          <img class="photo" src="{{ url_for('static', filename=file) }}" alt="">
+          <img class="photo" src="{{ url_for('static', filename='uploads/'+file) }}" alt="">
         </li>
     {% endfor %}
   </ul>
 {% endblock %}
-{% block js %} 
+<!-- {% block js %} 
 <script>
   alert("For some reason, the back slashes in my image paths keep getting encoded to '%5C', I'm not sure why")
 </script>
-{% endblock%}
+{% endblock%} -->
 
 
