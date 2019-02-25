@@ -55,10 +55,7 @@ def upload():
         return redirect(url_for('home'))
     else: 
        flash_errors(form) 
-
-    if request.method == 'GET':
-        return render_template('upload.html',form = form)
-    return render_template('upload.html')
+    return render_template('upload.html', form=form)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -86,7 +83,6 @@ def logout():
 # The functions below should be applicable to all Flask apps.
 ###
 
-# Flash errors from the form if validation fails
 
 def get_uploaded_images():
     pics = []
@@ -101,6 +97,7 @@ def get_uploaded_images():
             pics.append(os.path.join(folder, file))
     return pics
 
+# Flash errors from the form if validation fails
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
