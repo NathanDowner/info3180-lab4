@@ -1,3 +1,60 @@
 body {
     padding-top: 5rem;
 }
+
+.photos {
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 31fr);
+    grid-gap: 8px;
+    list-style: none;
+
+}
+
+.photo-item {
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    width: 200px;
+    border: 1px solid gray;
+    position: relative;
+}
+
+.photo {
+    height: 200px;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    /* position: relative; */
+
+}
+
+
+.photo-item::after {
+    content: "";
+    top:0;
+    left:0;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0.1632003143054097) 15%, rgba(255,255,255,0) 26%);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+.photo-item:hover::after {
+    display: block;
+}
+
+.name {
+    position: absolute;
+    width: 30px;
+    color: white;
+    z-index: 5;
+}
+
+input {
+    margin-bottom: 20px;
+}

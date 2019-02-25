@@ -11,6 +11,8 @@ from werkzeug.utils import secure_filename
 from app.forms import UploadForm
 
 
+path = app.config['UPLOAD_FOLDER']
+
 ###
 # Routing for your application.
 ###
@@ -26,6 +28,12 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+@app.route('/files')
+def files():
+    if not session.get('logged_in'):
+        abort(401) 
+    return render_template('files.html', files=get_uploaded_images())
+
 
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
@@ -36,15 +44,17 @@ def upload():
     form = UploadForm()
 
     # Validate file upload on submit
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate_on_submit():
         # Get file data and save to your uploads folder
-        filefolder = app.config['UPLOAD_FOLDER']
+      
         file = form.image.data
         filename = secure_filename(file.filename)
-        file.save(os.path.join(filefolder, filename))
+        file.save(os.path.join(path, filename))
 
         flash('File Saved', 'success')
         return redirect(url_for('home'))
+    else: 
+       flash_errors(form) 
 
     if request.method == 'GET':
         return render_template('upload.html',form = form)
@@ -77,6 +87,20 @@ def logout():
 ###
 
 # Flash errors from the form if validation fails
+
+def get_uploaded_images():
+    pics = []
+
+    rootdir = app.config['UPLOAD_FOLDER']
+    for subdir, dirs, files in os.walk(rootdir):
+        files = [f for f in files if not f[0] == '.'] 
+        for file in files:
+            # foldr = os.path.join(subdir, file)[13:]
+            # pics.append(foldr)
+            folder = os.path.splitext(os.path.basename(subdir))[0]
+            pics.append(os.path.join(folder, file))
+    return pics
+
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
